@@ -6,12 +6,15 @@ import {
     DeploymentResult,
     DeploymentStatus
 } from '../types';
+import { collection, doc, setDoc, updateDoc, getDocs, getDoc, query, where, orderBy, limit } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
-// Real deployment service with Vercel API integration
+// Real deployment service with Vercel API integration and Firebase persistence
 class DeploymentService {
     private deployments: Map<string, Deployment> = new Map();
     private pollingIntervals: Map<string, NodeJS.Timeout> = new Map();
     private readonly VERCEL_API_BASE = 'https://api.vercel.com';
+    private readonly DEPLOYMENTS_COLLECTION = 'deployments';
 
     /**
      * Deploy website to selected platform
@@ -46,6 +49,9 @@ class DeploymentService {
 
         this.deployments.set(deploymentId, deployment);
 
+        // Save to Firestore
+        await this.saveDeploymentToDb(deployment, params.projectName);
+
         // Start actual deployment based on platform
         if (params.platform === 'vercel') {
             this.deployToVercel(deploymentId, params);
@@ -61,6 +67,45 @@ class DeploymentService {
             platform: params.platform,
             timestamp
         };
+    }
+
+    /**
+     * Save deployment to Firestore
+     */
+    private async saveDeploymentToDb(deployment: Deployment, projectName: string): Promise<void> {
+        try {
+            const docRef = doc(db, this.DEPLOYMENTS_COLLECTION, deployment.id);
+            await setDoc(docRef, {
+                ...deployment,
+                projectName,
+                updatedAt: new Date().toISOString()
+            });
+        } catch (error) {
+            console.error('Error saving deployment to database:', error);
+            // Don't throw - deployment can continue even if DB save fails
+        }
+    }
+
+    /**
+     * Update deployment in Firestore
+     */
+    private async updateDeploymentInDb(deployment: Deployment): Promise<void> {
+        try {
+            const docRef = doc(db, this.DEPLOYMENTS_COLLECTION, deployment.id);
+            await updateDoc(docRef, {
+                status: deployment.status,
+                url: deployment.url,
+                previewUrl: deployment.previewUrl,
+                completedAt: deployment.completedAt,
+                error: deployment.error,
+                logs: deployment.logs,
+                metadata: deployment.metadata,
+                updatedAt: new Date().toISOString()
+            });
+        } catch (error) {
+            console.error('Error updating deployment in database:', error);
+            // Don't throw - deployment can continue even if DB update fails
+        }
     }
 
     /**
@@ -183,6 +228,9 @@ class DeploymentService {
                 level: 'error',
                 message: `Deployment failed: ${deployment.error}`
             });
+            
+            // Update in database
+            await this.updateDeploymentInDb(deployment);
         }
     }
 
@@ -228,6 +276,7 @@ class DeploymentService {
                         level: 'info',
                         message: 'Building project...'
                     });
+                    await this.updateDeploymentInDb(deployment);
                 } else if (data.readyState === 'READY') {
                     deployment.status = 'ready';
                     deployment.completedAt = new Date().toISOString();
@@ -238,6 +287,7 @@ class DeploymentService {
                         level: 'info',
                         message: `Deployment successful! Available at ${deployment.url}`
                     });
+                    await this.updateDeploymentInDb(deployment);
                     return true; // Done
                 } else if (data.readyState === 'ERROR') {
                     deployment.status = 'error';
@@ -248,6 +298,7 @@ class DeploymentService {
                         level: 'error',
                         message: 'Deployment failed on Vercel'
                     });
+                    await this.updateDeploymentInDb(deployment);
                     return true; // Done (with error)
                 } else if (data.readyState === 'CANCELED') {
                     deployment.status = 'canceled';
@@ -257,6 +308,7 @@ class DeploymentService {
                         level: 'info',
                         message: 'Deployment was canceled'
                     });
+                    await this.updateDeploymentInDb(deployment);
                     return true; // Done
                 }
 
@@ -297,16 +349,67 @@ class DeploymentService {
      * Get deployment status
      */
     async getDeploymentStatus(deploymentId: string): Promise<Deployment | null> {
-        return this.deployments.get(deploymentId) || null;
+        // Check memory first
+        const memoryDeployment = this.deployments.get(deploymentId);
+        if (memoryDeployment) {
+            return memoryDeployment;
+        }
+
+        // Fallback to database
+        try {
+            const docRef = doc(db, this.DEPLOYMENTS_COLLECTION, deploymentId);
+            const docSnap = await getDoc(docRef);
+            
+            if (docSnap.exists()) {
+                const deployment = docSnap.data() as Deployment;
+                this.deployments.set(deploymentId, deployment);
+                return deployment;
+            }
+        } catch (error) {
+            console.error('Error fetching deployment from database:', error);
+        }
+
+        return null;
     }
 
     /**
      * Get deployment history for a project
      */
-    async getDeploymentHistory(projectId: string): Promise<Deployment[]> {
-        // In production, this would query from database
-        return Array.from(this.deployments.values())
-            .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    async getDeploymentHistory(projectName: string): Promise<Deployment[]> {
+        try {
+            const q = query(
+                collection(db, this.DEPLOYMENTS_COLLECTION),
+                where('projectName', '==', projectName),
+                orderBy('createdAt', 'desc'),
+                limit(50)
+            );
+            
+            const querySnapshot = await getDocs(q);
+            const deployments: Deployment[] = [];
+            
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                deployments.push({
+                    id: data.id,
+                    platform: data.platform,
+                    status: data.status,
+                    createdAt: data.createdAt,
+                    completedAt: data.completedAt,
+                    url: data.url,
+                    previewUrl: data.previewUrl,
+                    error: data.error,
+                    logs: data.logs || [],
+                    metadata: data.metadata || {}
+                });
+            });
+            
+            return deployments;
+        } catch (error) {
+            console.error('Error fetching deployment history:', error);
+            // Fallback to memory
+            return Array.from(this.deployments.values())
+                .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        }
     }
 
     /**
