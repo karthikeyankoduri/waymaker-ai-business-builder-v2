@@ -229,10 +229,10 @@ export default function WebsiteBuilder() {
                                 </button>
                             </button>
 
-                            {/* Platform Dropdown */}
+                            {/* Platform Dropdown - Only Vercel for now */}
                             {showPlatformMenu && (
                                 <div className="absolute right-0 mt-2 w-48 glass-card border border-white/10 rounded-xl overflow-hidden z-10">
-                                    {(['vercel', 'netlify', 'github'] as DeploymentPlatform[]).map((platform) => (
+                                    {(['vercel'] as DeploymentPlatform[]).map((platform) => (
                                         <button
                                             key={platform}
                                             onClick={() => {

@@ -393,7 +393,7 @@ export default function Deployments() {
 
             {/* Platform Tabs */}
             <div className="flex gap-2 p-1 bg-slate-900/80 rounded-xl border border-white/10">
-                {(['vercel', 'netlify', 'github', 'webhooks'] as PlatformTab[]).map((platform) => (
+                {(['vercel', 'webhooks'] as PlatformTab[]).map((platform) => (
                     <button
                         key={platform}
                         onClick={() => setActiveTab(platform)}
