@@ -76,7 +76,16 @@ export default function FloatingChatbot() {
                     <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-950/50">
                         {activeProject.chatHistory.length === 0 && (
                             <div className="text-center text-slate-400 mt-10 text-sm px-4">
-                                Ask me anything about <span className="text-indigo-400 font-medium">{activeProject.name}</span>. I can analyze competitors, brainstorm ideas, or rewrite content!
+                                <p className="mb-3">Ask me anything about <span className="text-indigo-400 font-medium">{activeProject.name}</span>!</p>
+                                <p className="text-xs text-slate-500">I can help you with:</p>
+                                <ul className="text-xs text-slate-500 mt-2 space-y-1 text-left max-w-xs mx-auto">
+                                    <li>• Generate & tweak website designs</li>
+                                    <li>• Analyze competitors & market research</li>
+                                    <li>• Create marketing content</li>
+                                    <li>• Find funding opportunities</li>
+                                    <li>• <span className="text-indigo-400">Configure deployments (Vercel, Netlify, GitHub)</span></li>
+                                    <li>• Check deployment status & history</li>
+                                </ul>
                             </div>
                         )}
                         {activeProject.chatHistory.map((msg) => (

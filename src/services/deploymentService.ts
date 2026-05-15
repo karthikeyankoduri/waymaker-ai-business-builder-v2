@@ -166,7 +166,8 @@ class DeploymentService {
                     buildCommand: null,
                     outputDirectory: null
                 },
-                target: 'production'
+                target: 'production',
+                public: true  // Make deployment publicly accessible without login
             };
 
             // Add project ID if provided

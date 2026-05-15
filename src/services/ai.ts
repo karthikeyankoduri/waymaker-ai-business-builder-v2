@@ -425,7 +425,14 @@ export const generateChatResponse = async (
             competitors: project.competitors,
             websiteCode: project.websiteCode ? '[PRESENT — omitted for brevity]' : null,
             marketingKit: project.marketingKit,
-            fundingOpportunities: project.fundingOpportunities
+            fundingOpportunities: project.fundingOpportunities,
+            deploymentConfig: project.deploymentConfig ? {
+                vercel: project.deploymentConfig.vercel ? 'Configured' : 'Not configured',
+                netlify: project.deploymentConfig.netlify ? 'Configured' : 'Not configured',
+                github: project.deploymentConfig.github ? 'Configured' : 'Not configured'
+            } : 'Not configured',
+            deploymentHistory: project.deploymentHistory ? `${project.deploymentHistory.length} deployments` : 'No deployments yet',
+            activeDeployment: project.activeDeployment || 'None'
         }, null, 2);
 
         const systemPrompt = `You are Waymaker AI, an expert business consultant and development agent.
@@ -441,9 +448,17 @@ If the user asks to:
 3. Modify the marketing kit, ask for post timings or generate a picture -> call 'generate_marketing_kit'
 4. Find more investors or VCs -> call 'find_funding_opportunities'
 5. Update arbitrary text fields (like project name) -> call 'update_project'
+6. Configure deployment settings (Vercel, Netlify, GitHub) -> call 'configure_deployment'
+7. Check deployment status or history -> provide information from the project data above
 
-When you use a tool, you do not need to explain how you did it, just tell the user concisely that it's done. 
-If the user just asks a question about the generated information, simply answer it using the context above without using any tools.`;
+When you use a tool, you do not need to explain how you did it, just tell the user concisely that it's done.
+If the user just asks a question about the generated information, simply answer it using the context above without using any tools.
+
+DEPLOYMENT FEATURES:
+- The app now supports deploying websites to Vercel, Netlify, and GitHub Pages
+- Users can configure deployment credentials in the Deployments page
+- Deployment history and status are tracked for each project
+- You can help users understand deployment options and guide them through the process`;
 
         // Build message history
         const history: Groq.Chat.ChatCompletionMessageParam[] = project.chatHistory.map(msg => ({
@@ -527,6 +542,28 @@ If the user just asks a question about the generated information, simply answer 
                         required: ["instruction"]
                     }
                 }
+            },
+            {
+                type: "function",
+                function: {
+                    name: "configure_deployment",
+                    description: "Configure deployment settings for platforms like Vercel, Netlify, or GitHub Pages. Guide users on what credentials they need.",
+                    parameters: {
+                        type: "object",
+                        properties: {
+                            platform: {
+                                type: "string",
+                                enum: ["vercel", "netlify", "github"],
+                                description: "The deployment platform to configure"
+                            },
+                            guidance: {
+                                type: "string",
+                                description: "Guidance or instructions for the user on how to configure the platform"
+                            }
+                        },
+                        required: ["platform", "guidance"]
+                    }
+                }
             }
         ];
 
@@ -568,6 +605,20 @@ If the user just asks a question about the generated information, simply answer 
                     const newData = await generateFundingOpportunities(apiKey, project, args.instruction);
                     updates.fundingOpportunities = newData;
                     finalResponseText = finalResponseText || "✅ I've pulled in some new funding opportunities matching your criteria.";
+                } else if (toolCall.function.name === 'configure_deployment') {
+                    const platform = args.platform;
+                    const guidance = args.guidance;
+                    
+                    let instructions = '';
+                    if (platform === 'vercel') {
+                        instructions = `📦 **Vercel Deployment Setup**\n\n${guidance}\n\n**Steps:**\n1. Go to the **Deployments** tab in the sidebar\n2. Click on the **Vercel** tab\n3. Get your API token from [Vercel Account Settings](https://vercel.com/account/tokens)\n4. Paste it in the API Token field\n5. (Optional) Add Team ID and Project ID if deploying to a team\n6. Click **Test Connection** to verify\n7. Click **Save Configuration**\n\nOnce configured, you can deploy your website from the **Website Builder** tab!`;
+                    } else if (platform === 'netlify') {
+                        instructions = `📦 **Netlify Deployment Setup**\n\n${guidance}\n\n**Steps:**\n1. Go to the **Deployments** tab in the sidebar\n2. Click on the **Netlify** tab\n3. Get your API token from [Netlify User Settings](https://app.netlify.com/user/applications#personal-access-tokens)\n4. Paste it in the API Token field\n5. (Optional) Add Site ID to link to an existing site\n6. Click **Test Connection** to verify\n7. Click **Save Configuration**\n\nOnce configured, you can deploy your website from the **Website Builder** tab!`;
+                    } else if (platform === 'github') {
+                        instructions = `📦 **GitHub Pages Deployment Setup**\n\n${guidance}\n\n**Steps:**\n1. Go to the **Deployments** tab in the sidebar\n2. Click on the **GitHub** tab\n3. Get your Personal Access Token from [GitHub Settings](https://github.com/settings/tokens)\n4. Make sure to select the "repo" scope\n5. Paste it in the token field\n6. Enter your repository in format: username/repository-name\n7. Set the branch (default: gh-pages)\n8. Click **Test Connection** to verify\n9. Click **Save Configuration**\n\nOnce configured, you can deploy your website from the **Website Builder** tab!`;
+                    }
+                    
+                    finalResponseText = instructions;
                 }
             } catch (err) {
                 console.warn('Failed to parse or execute tool call args', err);
