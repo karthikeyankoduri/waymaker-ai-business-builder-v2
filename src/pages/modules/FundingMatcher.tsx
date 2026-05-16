@@ -18,9 +18,9 @@ export default function FundingMatcher() {
 
             {(!activeProject.fundingOpportunities || activeProject.fundingOpportunities.length === 0) ? (
                 <div className="glass-card p-12 text-center flex flex-col items-center border-dashed border-white/20">
-                    <AlertCircle className="w-12 h-12 text-slate-500 mb-4" />
+                    <AlertCircle className="w-12 h-12 text-white/40 mb-4" />
                     <h3 className="text-xl font-bold mb-2">Not Generated Yet</h3>
-                    <p className="text-slate-400">Go to the Overview tab to run the AI Orchestrator for this project.</p>
+                    <p className="text-white/50">Go to the Overview tab to run the AI Orchestrator for this project.</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -33,10 +33,10 @@ export default function FundingMatcher() {
                             <div className="mb-4 pr-12">
                                 <span className="inline-block px-3 py-1 bg-white/5 text-emerald-400 text-xs font-bold uppercase tracking-wider rounded-lg mb-3 border border-emerald-500/20">{fund.type}</span>
                                 <h3 className="text-xl font-bold text-white mb-1">{fund.name}</h3>
-                                <p className="text-2xl font-bold text-slate-200 font-mono tracking-tight">{fund.amount}</p>
+                                <p className="text-2xl font-bold text-white/70 font-mono tracking-tight">{fund.amount}</p>
                             </div>
 
-                            <div className="flex-1 text-sm text-slate-400 mb-6 leading-relaxed">
+                            <div className="flex-1 text-sm text-white/50 mb-6 leading-relaxed">
                                 {fund.description}
                                 {fund.link && (
                                     <div className="mt-4">
@@ -51,7 +51,7 @@ export default function FundingMatcher() {
                                 <h4 className="flex items-center gap-2 text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-2">
                                     <CheckCircle2 className="w-4 h-4" /> Why it's a match
                                 </h4>
-                                <p className="text-sm text-slate-200">{fund.matchReason}</p>
+                                <p className="text-sm text-white/70">{fund.matchReason}</p>
                             </div>
                         </div>
                     ))}

@@ -187,7 +187,7 @@ export default function MarketingKit() {
                     placeholder="Enter your n8n or Make webhook URL..."
                     value={webhookInput}
                     onChange={(e) => setWebhookInput(e.target.value)}
-                    className="flex-1 bg-slate-900/50 border border-white/10 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-emerald-500/50 transition-colors text-white"
+                    className="flex-1 bg-aura-dark/50 border border-white/10 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-emerald-500/50 transition-colors text-white"
                 />
                 <button
                     onClick={handleSaveWebhook}
@@ -202,9 +202,9 @@ export default function MarketingKit() {
             {/* Empty state */}
             {!hasKit ? (
                 <div className="glass-card p-12 text-center flex flex-col items-center border-dashed border-white/20">
-                    <AlertCircle className="w-12 h-12 text-slate-500 mb-4" />
+                    <AlertCircle className="w-12 h-12 text-white/40 mb-4" />
                     <h3 className="text-xl font-bold mb-2">Not Generated Yet</h3>
-                    <p className="text-slate-400">Go to the Overview tab to run the AI Orchestrator for this project.</p>
+                    <p className="text-white/50">Go to the Overview tab to run the AI Orchestrator for this project.</p>
                 </div>
             ) : (
                 <div className="space-y-8">
@@ -214,7 +214,7 @@ export default function MarketingKit() {
                         <div className="glass-card p-6 md:p-10 border border-white/10 relative overflow-hidden">
                             {/* Loading overlay */}
                             {isAnalyzingCompetitors && (
-                                <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm flex flex-col items-center justify-center z-20 rounded-xl">
+                                <div className="absolute inset-0 bg-aura-black/80 backdrop-blur-sm flex flex-col items-center justify-center z-20 rounded-xl">
                                     <Loader2 className="w-10 h-10 text-pink-500 animate-spin mb-3" />
                                     <p className="text-pink-400 font-medium animate-pulse text-sm">
                                         Fetching Instagram · LinkedIn · Twitter data…
@@ -228,14 +228,14 @@ export default function MarketingKit() {
                                         <Users className="w-6 h-6 text-pink-500" />
                                         Competitor Social Intelligence
                                     </h2>
-                                    <p className="text-slate-400 text-sm">
+                                    <p className="text-white/50 text-sm">
                                         Cross-platform organic intelligence — Instagram, LinkedIn &amp; Twitter.
                                     </p>
                                 </div>
                                 <button
                                     onClick={() => { hasFetchedRef.current = false; runAnalysis(); }}
                                     disabled={isAnalyzingCompetitors}
-                                    className="mt-4 md:mt-0 flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 transition-colors text-sm font-medium disabled:opacity-50"
+                                    className="mt-4 md:mt-0 flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/60 hover:text-white border border-white/10 transition-colors text-sm font-medium disabled:opacity-50"
                                 >
                                     <RefreshCw className={`w-4 h-4 ${isAnalyzingCompetitors ? 'animate-spin' : ''}`} />
                                     {competitorAnalytics?.length ? 'Refresh Data' : 'Fetch Analytics'}
@@ -246,7 +246,7 @@ export default function MarketingKit() {
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                                     {/* Left: bar chart */}
                                     <div>
-                                        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-6">
+                                        <h3 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-6">
                                             Overall Engagement Score
                                         </h3>
                                         <div className="space-y-6">
@@ -255,7 +255,7 @@ export default function MarketingKit() {
                                                     <div className="flex justify-between text-sm mb-2">
                                                         <span className="text-white font-medium">
                                                             {comp.competitorName}
-                                                            <span className="text-slate-500 font-mono text-xs ml-2">{comp.handle}</span>
+                                                            <span className="text-white/40 font-mono text-xs ml-2">{comp.handle}</span>
                                                         </span>
                                                         <span className="text-emerald-400 font-mono">{comp.engagementScore}/100</span>
                                                     </div>
@@ -272,7 +272,7 @@ export default function MarketingKit() {
 
                                     {/* Right: per-platform breakdown */}
                                     <div>
-                                        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-6">
+                                        <h3 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-6">
                                             Platform Breakdown
                                         </h3>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -284,19 +284,19 @@ export default function MarketingKit() {
                                                     <h4 className="text-white font-serif font-bold mb-4">{comp.competitorName}</h4>
                                                     <div className="space-y-3">
                                                         <div className="flex justify-between text-xs">
-                                                            <span className="flex items-center gap-1 text-slate-400"><Instagram className="w-3 h-3 text-pink-500" /> Instagram</span>
+                                                            <span className="flex items-center gap-1 text-white/50"><Instagram className="w-3 h-3 text-pink-500" /> Instagram</span>
                                                             <span className="text-white font-mono">{comp.followersEstimate || 'N/A'}</span>
                                                         </div>
                                                         <div className="flex justify-between text-xs">
-                                                            <span className="flex items-center gap-1 text-slate-400"><Linkedin className="w-3 h-3 text-blue-400" /> LinkedIn</span>
+                                                            <span className="flex items-center gap-1 text-white/50"><Linkedin className="w-3 h-3 text-blue-400" /> LinkedIn</span>
                                                             <span className="text-blue-400 font-mono">{comp.linkedinFollowers || 'N/A'}</span>
                                                         </div>
                                                         <div className="flex justify-between text-xs">
-                                                            <span className="flex items-center gap-1 text-slate-400"><Twitter className="w-3 h-3 text-sky-400" /> Twitter</span>
+                                                            <span className="flex items-center gap-1 text-white/50"><Twitter className="w-3 h-3 text-sky-400" /> Twitter</span>
                                                             <span className="text-sky-400 font-mono">{comp.twitterFollowers || 'N/A'}</span>
                                                         </div>
                                                         <div className="pt-2 border-t border-white/10 flex justify-between text-xs">
-                                                            <span className="text-slate-400">Avg Likes / Post</span>
+                                                            <span className="text-white/50">Avg Likes / Post</span>
                                                             <span className="text-pink-400 font-mono">{comp.avgLikes?.toLocaleString?.() ?? comp.avgLikes}</span>
                                                         </div>
                                                         <div className="h-1.5 w-full bg-black/50 rounded-full overflow-hidden">
@@ -313,8 +313,8 @@ export default function MarketingKit() {
                                 </div>
                             ) : !isAnalyzingCompetitors ? (
                                 <div className="text-center py-8">
-                                    <Activity className="w-10 h-10 text-slate-600 mx-auto mb-3" />
-                                    <p className="text-slate-400 text-sm">
+                                    <Activity className="w-10 h-10 text-white/30 mx-auto mb-3" />
+                                    <p className="text-white/50 text-sm">
                                         No analytics data yet. Click <strong className="text-white">Fetch Analytics</strong> above to load intelligence.
                                     </p>
                                 </div>
@@ -329,7 +329,7 @@ export default function MarketingKit() {
                                 <ImageIcon className="w-5 h-5 text-indigo-400" />
                                 Attach Media
                             </h3>
-                            <p className="text-slate-400 text-sm">
+                            <p className="text-white/50 text-sm">
                                 Upload a picture to include with your posts. Sent in the webhook payload under the <code className="text-indigo-400 text-xs">image</code> field.
                             </p>
                         </div>
@@ -369,7 +369,7 @@ export default function MarketingKit() {
 
                                     <h3 className="text-lg font-bold text-white mb-6 pr-12">{post.platform} Post</h3>
 
-                                    <div className="flex-1 bg-slate-900/50 p-4 rounded-xl border border-white/5 mb-6 text-sm text-slate-300 whitespace-pre-wrap leading-relaxed">
+                                    <div className="flex-1 bg-aura-dark/50 p-4 rounded-xl border border-white/5 mb-6 text-sm text-white/60 whitespace-pre-wrap leading-relaxed">
                                         {post.content}
                                     </div>
 
@@ -377,7 +377,7 @@ export default function MarketingKit() {
                                         {post.hashtags.map((tag, idx) => (
                                             <span
                                                 key={idx}
-                                                className="flex items-center text-xs font-medium px-2 py-1 rounded bg-white/5 text-slate-300 border border-white/10 hover:border-primary/50 transition-colors"
+                                                className="flex items-center text-xs font-medium px-2 py-1 rounded bg-white/5 text-white/60 border border-white/10 hover:border-primary/50 transition-colors"
                                             >
                                                 <Hash className="w-3 h-3 text-primary mr-0.5" />
                                                 {tag.replace('#', '')}
@@ -390,7 +390,7 @@ export default function MarketingKit() {
                                         <h4 className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">
                                             AI Image Prompt
                                         </h4>
-                                        <p className="text-xs text-slate-400 italic pr-6 leading-relaxed">
+                                        <p className="text-xs text-white/50 italic pr-6 leading-relaxed">
                                             "{post.imagePrompt}"
                                         </p>
                                     </div>
@@ -398,7 +398,7 @@ export default function MarketingKit() {
                                     <button
                                         onClick={() => handleSendToWebhook(i)}
                                         disabled={sendingState.status === 'loading'}
-                                        className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-colors text-sm font-medium text-slate-300 hover:text-white"
+                                        className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-colors text-sm font-medium text-white/60 hover:text-white"
                                     >
                                         {sendingState.id === i && sendingState.status === 'loading' ? (
                                             <Loader2 className="w-4 h-4 animate-spin text-emerald-400" />

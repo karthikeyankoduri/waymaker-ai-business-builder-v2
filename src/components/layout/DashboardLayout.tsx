@@ -5,9 +5,9 @@ import FloatingChatbot from '../chat/FloatingChatbot';
 
 export default function DashboardLayout() {
     return (
-        <div className="flex h-screen overflow-hidden bg-slate-950 text-slate-100 relative">
+        <div className="flex h-screen overflow-hidden bg-aura-black text-slate-100 relative">
             <Sidebar />
-            <main className="flex-1 overflow-y-auto relative z-10 p-8 bg-slate-950">
+            <main className="flex-1 overflow-y-auto relative z-10 p-8 bg-aura-black">
                 <div className="max-w-7xl mx-auto">
                     <Outlet />
                 </div>

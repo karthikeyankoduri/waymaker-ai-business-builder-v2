@@ -143,9 +143,9 @@ export default function Deployments() {
                     <div className="space-y-6">
                         <div className="flex items-start gap-4 p-4 bg-indigo-500/10 border border-indigo-500/20 rounded-lg">
                             <AlertCircle className="w-5 h-5 text-indigo-400 flex-shrink-0 mt-0.5" />
-                            <div className="text-sm text-slate-300">
+                            <div className="text-sm text-white/60">
                                 <p className="font-medium text-indigo-400 mb-1">How to get your Vercel API Token:</p>
-                                <ol className="list-decimal list-inside space-y-1 text-slate-400">
+                                <ol className="list-decimal list-inside space-y-1 text-white/50">
                                     <li>Go to <a href="https://vercel.com/account/tokens" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:underline">Vercel Account Settings</a></li>
                                     <li>Click "Create Token" and give it a name</li>
                                     <li>Copy the token and paste it below</li>
@@ -154,7 +154,7 @@ export default function Deployments() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                            <label className="block text-sm font-medium text-white/60 mb-2">
                                 API Token <span className="text-rose-400">*</span>
                             </label>
                             <input
@@ -167,8 +167,8 @@ export default function Deployments() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-2">
-                                Team ID <span className="text-slate-500">(optional)</span>
+                            <label className="block text-sm font-medium text-white/60 mb-2">
+                                Team ID <span className="text-white/40">(optional)</span>
                             </label>
                             <input
                                 type="text"
@@ -177,14 +177,14 @@ export default function Deployments() {
                                 placeholder="team_••••••••••••••••"
                                 className="input-field w-full"
                             />
-                            <p className="text-xs text-slate-500 mt-2">
+                            <p className="text-xs text-white/40 mt-2">
                                 Required if deploying to a team account
                             </p>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-2">
-                                Project ID <span className="text-slate-500">(optional)</span>
+                            <label className="block text-sm font-medium text-white/60 mb-2">
+                                Project ID <span className="text-white/40">(optional)</span>
                             </label>
                             <input
                                 type="text"
@@ -193,7 +193,7 @@ export default function Deployments() {
                                 placeholder="prj_••••••••••••••••"
                                 className="input-field w-full"
                             />
-                            <p className="text-xs text-slate-500 mt-2">
+                            <p className="text-xs text-white/40 mt-2">
                                 Link deployments to an existing Vercel project
                             </p>
                         </div>
@@ -205,9 +205,9 @@ export default function Deployments() {
                     <div className="space-y-6">
                         <div className="flex items-start gap-4 p-4 bg-teal-500/10 border border-teal-500/20 rounded-lg">
                             <AlertCircle className="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5" />
-                            <div className="text-sm text-slate-300">
+                            <div className="text-sm text-white/60">
                                 <p className="font-medium text-teal-400 mb-1">How to get your Netlify API Token:</p>
-                                <ol className="list-decimal list-inside space-y-1 text-slate-400">
+                                <ol className="list-decimal list-inside space-y-1 text-white/50">
                                     <li>Go to <a href="https://app.netlify.com/user/applications#personal-access-tokens" target="_blank" rel="noopener noreferrer" className="text-teal-400 hover:underline">Netlify User Settings</a></li>
                                     <li>Click "New access token"</li>
                                     <li>Give it a description and copy the token</li>
@@ -216,7 +216,7 @@ export default function Deployments() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                            <label className="block text-sm font-medium text-white/60 mb-2">
                                 API Token <span className="text-rose-400">*</span>
                             </label>
                             <input
@@ -229,8 +229,8 @@ export default function Deployments() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-2">
-                                Site ID <span className="text-slate-500">(optional)</span>
+                            <label className="block text-sm font-medium text-white/60 mb-2">
+                                Site ID <span className="text-white/40">(optional)</span>
                             </label>
                             <input
                                 type="text"
@@ -239,7 +239,7 @@ export default function Deployments() {
                                 placeholder="abc123-def456-ghi789"
                                 className="input-field w-full"
                             />
-                            <p className="text-xs text-slate-500 mt-2">
+                            <p className="text-xs text-white/40 mt-2">
                                 Link deployments to an existing Netlify site
                             </p>
                         </div>
@@ -249,12 +249,12 @@ export default function Deployments() {
             case 'github':
                 return (
                     <div className="space-y-6">
-                        <div className="flex items-start gap-4 p-4 bg-slate-500/10 border border-slate-500/20 rounded-lg">
-                            <AlertCircle className="w-5 h-5 text-slate-400 flex-shrink-0 mt-0.5" />
-                            <div className="text-sm text-slate-300">
-                                <p className="font-medium text-slate-300 mb-1">How to get your GitHub Personal Access Token:</p>
-                                <ol className="list-decimal list-inside space-y-1 text-slate-400">
-                                    <li>Go to <a href="https://github.com/settings/tokens" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:underline">GitHub Settings → Developer settings</a></li>
+                        <div className="flex items-start gap-4 p-4 bg-white/5 border border-white/10 rounded-lg">
+                            <AlertCircle className="w-5 h-5 text-white/50 flex-shrink-0 mt-0.5" />
+                            <div className="text-sm text-white/60">
+                                <p className="font-medium text-white/60 mb-1">How to get your GitHub Personal Access Token:</p>
+                                <ol className="list-decimal list-inside space-y-1 text-white/50">
+                                    <li>Go to <a href="https://github.com/settings/tokens" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:underline">GitHub Settings → Developer settings</a></li>
                                     <li>Click "Generate new token (classic)"</li>
                                     <li>Select "repo" scope and generate</li>
                                 </ol>
@@ -262,7 +262,7 @@ export default function Deployments() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                            <label className="block text-sm font-medium text-white/60 mb-2">
                                 Personal Access Token <span className="text-rose-400">*</span>
                             </label>
                             <input
@@ -275,7 +275,7 @@ export default function Deployments() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                            <label className="block text-sm font-medium text-white/60 mb-2">
                                 Repository <span className="text-rose-400">*</span>
                             </label>
                             <input
@@ -285,13 +285,13 @@ export default function Deployments() {
                                 placeholder="username/repository-name"
                                 className="input-field w-full"
                             />
-                            <p className="text-xs text-slate-500 mt-2">
+                            <p className="text-xs text-white/40 mt-2">
                                 Format: username/repository-name
                             </p>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                            <label className="block text-sm font-medium text-white/60 mb-2">
                                 Branch
                             </label>
                             <input
@@ -301,7 +301,7 @@ export default function Deployments() {
                                 placeholder="gh-pages"
                                 className="input-field w-full"
                             />
-                            <p className="text-xs text-slate-500 mt-2">
+                            <p className="text-xs text-white/40 mt-2">
                                 Default: gh-pages (GitHub Pages standard)
                             </p>
                         </div>
@@ -319,7 +319,7 @@ export default function Deployments() {
                                 </div>
                                 <div>
                                     <h3 className="text-lg font-bold">n8n Webhook</h3>
-                                    <p className="text-sm text-slate-400">For Marketing Kit automation</p>
+                                    <p className="text-sm text-white/50">For Marketing Kit automation</p>
                                 </div>
                             </div>
                             <input
@@ -339,7 +339,7 @@ export default function Deployments() {
                                 </div>
                                 <div>
                                     <h3 className="text-lg font-bold">Zapier Webhook</h3>
-                                    <p className="text-sm text-slate-400">Legacy website deployment</p>
+                                    <p className="text-sm text-white/50">Legacy website deployment</p>
                                 </div>
                             </div>
                             <input
@@ -371,11 +371,11 @@ export default function Deployments() {
     const getPlatformColor = (platform: PlatformTab) => {
         switch (platform) {
             case 'vercel':
-                return 'text-slate-100 bg-black';
+                return 'text-white/80 bg-black';
             case 'netlify':
                 return 'text-white bg-teal-500';
             case 'github':
-                return 'text-white bg-slate-800';
+                return 'text-white bg-white/10';
             case 'webhooks':
                 return 'text-emerald-400 bg-emerald-500/10';
         }
@@ -392,7 +392,7 @@ export default function Deployments() {
             </div>
 
             {/* Platform Tabs */}
-            <div className="flex gap-2 p-1 bg-slate-900/80 rounded-xl border border-white/10">
+            <div className="flex gap-2 p-1 bg-aura-dark/80 rounded-xl border border-white/10">
                 {(['vercel', 'webhooks'] as PlatformTab[]).map((platform) => (
                     <button
                         key={platform}
@@ -400,7 +400,7 @@ export default function Deployments() {
                         className={`flex-1 px-4 py-3 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2 ${
                             activeTab === platform
                                 ? 'bg-indigo-600 text-white shadow-lg'
-                                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                                : 'text-white/50 hover:text-white/70 hover:bg-white/5'
                         }`}
                     >
                         {getPlatformIcon(platform)}

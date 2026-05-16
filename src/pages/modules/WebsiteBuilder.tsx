@@ -172,11 +172,11 @@ export default function WebsiteBuilder() {
                 {activeProject.websiteCode && (
                     <div className="flex items-center gap-3">
                         {/* View Toggle */}
-                        <div className="flex bg-slate-900/80 p-1 rounded-xl border border-white/10">
+                        <div className="flex bg-aura-dark/80 p-1 rounded-xl border border-white/10">
                             <button
                                 onClick={() => setView('preview')}
                                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
-                                    view === 'preview' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-slate-200'
+                                    view === 'preview' ? 'bg-indigo-600 text-white' : 'text-white/50 hover:text-white/70'
                                 }`}
                             >
                                 <Eye className="w-4 h-4" /> Preview
@@ -184,7 +184,7 @@ export default function WebsiteBuilder() {
                             <button
                                 onClick={() => setView('code')}
                                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
-                                    view === 'code' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-slate-200'
+                                    view === 'code' ? 'bg-indigo-600 text-white' : 'text-white/50 hover:text-white/70'
                                 }`}
                             >
                                 <Code className="w-4 h-4" /> Code
@@ -192,7 +192,7 @@ export default function WebsiteBuilder() {
                             <button
                                 onClick={() => setView('deploy')}
                                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
-                                    view === 'deploy' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-slate-200'
+                                    view === 'deploy' ? 'bg-indigo-600 text-white' : 'text-white/50 hover:text-white/70'
                                 }`}
                             >
                                 <History className="w-4 h-4" /> Deployments
@@ -240,7 +240,7 @@ export default function WebsiteBuilder() {
                                                 setShowPlatformMenu(false);
                                             }}
                                             className={`w-full px-4 py-3 text-left hover:bg-white/5 transition-colors flex items-center justify-between ${
-                                                selectedPlatform === platform ? 'bg-indigo-600/20 text-indigo-400' : 'text-slate-300'
+                                                selectedPlatform === platform ? 'bg-indigo-600/20 text-indigo-400' : 'text-white/60'
                                             }`}
                                         >
                                             <span className="font-medium">{getPlatformIcon(platform)}</span>
@@ -285,9 +285,9 @@ export default function WebsiteBuilder() {
             {/* Content */}
             {!activeProject.websiteCode ? (
                 <div className="glass-card p-12 text-center flex flex-col items-center border-dashed border-white/20 mt-8">
-                    <AlertCircle className="w-12 h-12 text-slate-500 mb-4" />
+                    <AlertCircle className="w-12 h-12 text-white/40 mb-4" />
                     <h3 className="text-xl font-bold mb-2">Not Generated Yet</h3>
-                    <p className="text-slate-400">Go to the Overview tab to run the AI Orchestrator for this project.</p>
+                    <p className="text-white/50">Go to the Overview tab to run the AI Orchestrator for this project.</p>
                 </div>
             ) : (
                 <div className="flex-1 flex flex-col mt-4 min-h-[600px]">
@@ -305,7 +305,7 @@ export default function WebsiteBuilder() {
                     {view === 'code' && (
                         <div className="flex-1 glass-card overflow-hidden border-white/10 flex flex-col">
                             <div className="relative flex-1 bg-[#1e1e1e] overflow-auto">
-                                <pre className="p-6 text-sm text-slate-300 leading-relaxed font-mono">
+                                <pre className="p-6 text-sm text-white/60 leading-relaxed font-mono">
                                     <code>{activeProject.websiteCode}</code>
                                 </pre>
                             </div>

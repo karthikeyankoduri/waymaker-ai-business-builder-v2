@@ -17,15 +17,15 @@ export default function Sidebar() {
         clsx(
             "flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-sm font-medium",
             isActive
-                ? "bg-indigo-600 text-white shadow-sm"
-                : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
+                ? "bg-white/10 text-white shadow-sm border border-white/5"
+                : "text-white/50 hover:text-white hover:bg-white/5"
         );
 
     return (
-        <div className="w-64 h-full glass-panel flex flex-col pt-6 flex-shrink-0 border-r border-slate-800/50 z-20">
+        <div className="w-64 h-full glass-panel flex flex-col pt-6 flex-shrink-0 z-20">
             <div className="px-6 mb-8 flex items-center justify-between cursor-pointer group" onClick={() => navigate('/')}>
                 <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center shadow-lg">
+                    <div className="w-8 h-8 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center shadow-lg backdrop-blur-md">
                         <Hexagon className="w-4 h-4 text-white" />
                     </div>
                     <span className="text-lg font-semibold tracking-tight text-white">Waymaker</span>
@@ -35,7 +35,7 @@ export default function Sidebar() {
             <div className="px-4 mb-6">
                 <button
                     onClick={handleNewProject}
-                    className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-500 transition-all shadow-sm active:scale-95"
+                    className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-white text-black font-medium hover:bg-white/90 transition-all shadow-sm active:scale-95"
                 >
                     <Plus className="w-4 h-4" /> New Project
                 </button>
@@ -52,7 +52,7 @@ export default function Sidebar() {
                 {/* Modules Navigation (Only shown if a project is selected) */}
                 {activeProject && (
                     <div>
-                        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">Modules</h3>
+                        <h3 className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-3 px-3">Modules</h3>
                         <div className="space-y-1">
                             <NavLink to="/dashboard" end className={navItemClass}>
                                 <Target className="w-4 h-4" /> Overview
