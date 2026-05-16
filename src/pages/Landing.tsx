@@ -1,6 +1,5 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 export default function Landing() {
     const navigate = useNavigate();
@@ -22,7 +21,7 @@ export default function Landing() {
     };
 
     return (
-        <div className="bg-[#050505] text-white font-sans selection:bg-indigo-500/30 selection:text-white">
+        <div className="bg-aura-black text-white font-sans selection:bg-indigo-500/30 selection:text-white">
             <div className="noise"></div>
 
             {/* Navigation */}
@@ -52,7 +51,7 @@ export default function Landing() {
 
             {/* Hero Section */}
             <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-b from-indigo-950/10 via-[#050505] to-[#050505]"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-indigo-950/10 via-aura-black to-aura-black"></div>
 
                 {/* Floating Elements */}
                 <div className="absolute top-1/4 left-10 w-64 h-64 bg-indigo-600/10 rounded-full blur-[120px] animate-pulse-slow"></div>
@@ -226,7 +225,7 @@ export default function Landing() {
                             className="flex-1 w-full relative"
                         >
                             <div className="w-full aspect-[4/5] bg-gradient-to-br from-indigo-500/20 to-transparent rounded-[3rem] p-4">
-                                <div className="w-full h-full bg-[#0a0a0a] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl relative">
+                                <div className="w-full h-full bg-aura-dark rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl relative">
                                     {/* UI Simulation */}
                                     <div className="p-10 space-y-8 flex flex-col h-full">
                                         <div className="space-y-2">

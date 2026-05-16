@@ -25,8 +25,7 @@ export const projectService = {
                 chatHistory: project.chatHistory || [],
             });
         } catch (error) {
-            console.error('Error saving project:', error);
-            throw error;
+            throw new Error(`Failed to save project: ${error instanceof Error ? error.message : 'Unknown error'}`);
         }
     },
 
@@ -35,8 +34,7 @@ export const projectService = {
             const docRef = doc(db, COLLECTION_NAME, projectId);
             await updateDoc(docRef, updates);
         } catch (error) {
-            console.error('Error updating project:', error);
-            throw error;
+            throw new Error(`Failed to update project: ${error instanceof Error ? error.message : 'Unknown error'}`);
         }
     },
 
@@ -52,8 +50,7 @@ export const projectService = {
             
             return projects;
         } catch (error) {
-            console.error('Error fetching projects:', error);
-            throw error;
+            throw new Error(`Failed to fetch projects: ${error instanceof Error ? error.message : 'Unknown error'}`);
         }
     },
 
@@ -68,8 +65,7 @@ export const projectService = {
                 return null;
             }
         } catch (error) {
-            console.error('Error fetching project:', error);
-            throw error;
+            throw new Error(`Failed to fetch project: ${error instanceof Error ? error.message : 'Unknown error'}`);
         }
     },
 
@@ -78,8 +74,7 @@ export const projectService = {
             const docRef = doc(db, COLLECTION_NAME, id);
             await deleteDoc(docRef);
         } catch (error) {
-            console.error('Error deleting project:', error);
-            throw error;
+            throw new Error(`Failed to delete project: ${error instanceof Error ? error.message : 'Unknown error'}`);
         }
     }
 };

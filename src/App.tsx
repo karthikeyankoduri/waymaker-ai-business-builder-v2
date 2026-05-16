@@ -1,6 +1,6 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ProjectProvider } from './context/ProjectContext';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import Landing from './pages/Landing';
 import DashboardLayout from './components/layout/DashboardLayout';
 import Dashboard from './pages/Dashboard';
@@ -13,23 +13,25 @@ import MyProjects from './pages/MyProjects';
 
 function App() {
   return (
-    <ProjectProvider>
-      <div className="noise-overlay" />
-      <Router>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="projects" element={<MyProjects />} />
-            <Route path="research" element={<MarketResearch />} />
-            <Route path="website" element={<WebsiteBuilder />} />
-            <Route path="marketing" element={<MarketingKit />} />
-            <Route path="funding" element={<FundingMatcher />} />
-            <Route path="deployments" element={<Deployments />} />
-          </Route>
-        </Routes>
-      </Router>
-    </ProjectProvider>
+    <ErrorBoundary>
+      <ProjectProvider>
+        <div className="noise-overlay" />
+        <Router>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/dashboard" element={<DashboardLayout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="projects" element={<MyProjects />} />
+              <Route path="research" element={<MarketResearch />} />
+              <Route path="website" element={<WebsiteBuilder />} />
+              <Route path="marketing" element={<MarketingKit />} />
+              <Route path="funding" element={<FundingMatcher />} />
+              <Route path="deployments" element={<Deployments />} />
+            </Route>
+          </Routes>
+        </Router>
+      </ProjectProvider>
+    </ErrorBoundary>
   );
 }
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useProjects } from '../../context/ProjectContext';
 import { Target, AlertCircle, ChevronsUp, ChevronsDown, Zap } from 'lucide-react';
 

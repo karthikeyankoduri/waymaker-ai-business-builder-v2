@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useProjects } from '../../context/ProjectContext';
 import { deploymentService } from '../../services/deploymentService';
 import DeploymentStatus from '../../components/deployment/DeploymentStatus';
@@ -304,7 +304,7 @@ export default function WebsiteBuilder() {
 
                     {view === 'code' && (
                         <div className="flex-1 glass-card overflow-hidden border-white/10 flex flex-col">
-                            <div className="relative flex-1 bg-[#1e1e1e] overflow-auto">
+                            <div className="relative flex-1 bg-aura-dark overflow-auto">
                                 <pre className="p-6 text-sm text-white/60 leading-relaxed font-mono">
                                     <code>{activeProject.websiteCode}</code>
                                 </pre>

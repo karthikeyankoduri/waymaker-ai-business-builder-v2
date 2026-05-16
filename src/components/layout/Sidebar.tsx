@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useProjects } from '../../context/ProjectContext';
-import { Command, Plus, Briefcase, LayoutTemplate, MessageSquare, Folders, Settings, Megaphone, Target, DollarSign, Trash2, Hexagon } from 'lucide-react';
+import { Plus, Briefcase, LayoutTemplate, Folders, Settings, Megaphone, Target, DollarSign, Hexagon } from 'lucide-react';
 import clsx from 'clsx';
 
 export default function Sidebar() {

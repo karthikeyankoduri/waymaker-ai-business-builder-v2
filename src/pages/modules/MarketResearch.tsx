@@ -1,4 +1,3 @@
-import React from 'react';
 import { useProjects } from '../../context/ProjectContext';
 import { Folders, AlertCircle, FileText, Target, TrendingUp, Lightbulb, Sparkles } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';

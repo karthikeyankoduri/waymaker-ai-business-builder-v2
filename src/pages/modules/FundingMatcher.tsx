@@ -1,4 +1,3 @@
-import React from 'react';
 import { useProjects } from '../../context/ProjectContext';
 import { DollarSign, AlertCircle, TrendingUp, CheckCircle2 } from 'lucide-react';
 
