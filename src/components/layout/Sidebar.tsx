@@ -1,11 +1,15 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useProjects } from '../../context/ProjectContext';
-import { Plus, Briefcase, LayoutTemplate, Folders, Settings, Megaphone, Target, DollarSign, Hexagon } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import { Plus, Briefcase, LayoutTemplate, Folders, Settings, Megaphone, Target, DollarSign, Hexagon, LogOut, User } from 'lucide-react';
 import clsx from 'clsx';
+import { useState } from 'react';
 
 export default function Sidebar() {
     const { projects, activeProject, setActiveProjectId, deleteProject, apiKey } = useProjects();
+    const { user, signOut } = useAuth();
     const navigate = useNavigate();
+    const [signingOut, setSigningOut] = useState(false);
 
     const handleNewProject = () => {
         setActiveProjectId(null); // Deselect active so dashboard shows the new project form
@@ -75,6 +79,48 @@ export default function Sidebar() {
                     </div>
                 )}
 
+            </div>
+
+            {/* User Profile Section */}
+            <div className="px-4 pb-4 border-t border-white/10 pt-4">
+                <div className="flex items-center gap-3 px-3 py-2 rounded-lg bg-white/5">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0">
+                        {user?.photoURL ? (
+                            <img
+                                src={user.photoURL}
+                                alt={user.displayName || 'User'}
+                                className="w-full h-full rounded-full"
+                            />
+                        ) : (
+                            <User className="w-4 h-4 text-white" />
+                        )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-white truncate">
+                            {user?.displayName || 'User'}
+                        </p>
+                        <p className="text-xs text-slate-400 truncate">
+                            {user?.email}
+                        </p>
+                    </div>
+                    <button
+                        onClick={async () => {
+                            setSigningOut(true);
+                            try {
+                                await signOut();
+                                navigate('/login');
+                            } catch (error) {
+                                console.error('Sign out error:', error);
+                                setSigningOut(false);
+                            }
+                        }}
+                        disabled={signingOut}
+                        className="p-1.5 hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50"
+                        title="Sign out"
+                    >
+                        <LogOut className="w-4 h-4 text-slate-400 hover:text-white" />
+                    </button>
+                </div>
             </div>
 
         </div>

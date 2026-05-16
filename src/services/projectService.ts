@@ -11,6 +11,7 @@ export const projectService = {
             // setDoc will create or overwrite the document entirely (like upsert)
             await setDoc(docRef, {
                 id: project.id,
+                userId: project.userId,
                 name: project.name,
                 idea: project.idea,
                 industry: project.industry || null,

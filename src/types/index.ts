@@ -1,5 +1,6 @@
 export interface Project {
     id: string;
+    userId: string; // Firebase Auth user ID
     name: string;
     idea: string;
     industry?: string;

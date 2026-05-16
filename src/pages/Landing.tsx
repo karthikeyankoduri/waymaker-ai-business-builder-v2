@@ -43,8 +43,8 @@ export default function Landing() {
                         <a href="#system" className="hover:text-white transition-colors">System</a>
                         <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
                     </div>
-                    <button onClick={() => navigate('/dashboard')} className="bg-white text-black px-5 py-2 rounded-full text-sm font-bold hover:bg-indigo-500 hover:text-white transition-all">
-                        Start Building
+                    <button onClick={() => navigate('/login')} className="bg-white text-black px-5 py-2 rounded-full text-sm font-bold hover:bg-indigo-500 hover:text-white transition-all">
+                        Get Started
                     </button>
                 </motion.div>
             </nav>

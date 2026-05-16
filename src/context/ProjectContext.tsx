@@ -1,12 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Project } from '../types';
 import { projectService } from '../services/projectService';
+import { useAuth } from './AuthContext';
 
 interface ProjectContextType {
     projects: Project[];
     activeProject: Project | null;
     setActiveProjectId: (id: string | null) => void;
-    addProject: (project: Omit<Project, 'id' | 'createdAt' | 'chatHistory'>) => Project;
+    addProject: (project: Omit<Project, 'id' | 'userId' | 'createdAt' | 'chatHistory'>) => Project;
     updateProject: (id: string, updates: Partial<Project>) => void;
     deleteProject: (id: string) => void;
     apiKey: string | null;
@@ -16,13 +17,20 @@ interface ProjectContextType {
 const ProjectContext = createContext<ProjectContextType | undefined>(undefined);
 
 export function ProjectProvider({ children }: { children: React.ReactNode }) {
+    const { user } = useAuth();
     const [projects, setProjects] = useState<Project[]>(() => {
         const saved = localStorage.getItem('waymaker_projects');
         return saved ? JSON.parse(saved) : [];
     });
 
-    // Optionally add a loading state if needed here, but for now just load asynchronously
+    // Load projects when user changes
     useEffect(() => {
+        if (!user) {
+            setProjects([]);
+            setActiveProjectId(null);
+            return;
+        }
+
         const loadProjects = async () => {
             try {
                 const data = await projectService.getProjects();
@@ -30,11 +38,11 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
                     setProjects(data);
                 }
             } catch (error) {
-                console.error("Failed to load projects from Supabase:", error);
+                console.error("Failed to load projects from Firebase:", error);
             }
         };
         loadProjects();
-    }, []);
+    }, [user]);
 
     const [activeProjectId, setActiveProjectId] = useState<string | null>(() => {
         return localStorage.getItem('waymaker_active_project');
@@ -66,10 +74,15 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
         }
     };
 
-    const addProject = (projectData: Omit<Project, 'id' | 'createdAt' | 'chatHistory'>) => {
+    const addProject = (projectData: Omit<Project, 'id' | 'userId' | 'createdAt' | 'chatHistory'>) => {
+        if (!user) {
+            throw new Error('User must be authenticated to create projects');
+        }
+
         const newProject: Project = {
             ...projectData,
             id: crypto.randomUUID(),
+            userId: user.uid,
             createdAt: new Date().toISOString(),
             chatHistory: [],
         };
@@ -77,7 +90,7 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
         setActiveProjectId(newProject.id);
 
         projectService.saveProject(newProject).catch(err => {
-            console.error("Failed to save project to Supabase:", err);
+            console.error("Failed to save project to Firebase:", err);
         });
 
         return newProject;
