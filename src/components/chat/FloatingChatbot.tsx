@@ -57,7 +57,7 @@ export default function FloatingChatbot() {
             className="fixed bottom-6 right-6 z-50 flex flex-col items-end"
         >
             {isOpen ? (
-                <div className="glass-card w-[380px] h-[600px] flex flex-col border border-slate-800 shadow-2xl scale-in">
+                <div className="glass-card w-[calc(100vw-3rem)] sm:w-[380px] h-[500px] sm:h-[600px] max-h-[calc(100vh-6rem)] flex flex-col border border-slate-800 shadow-2xl scale-in">
                     <div className="p-4 bg-slate-900/95 rounded-t-xl border-b border-slate-800 flex justify-between items-center">
                         <div className="flex items-center gap-3 cursor-grab active:cursor-grabbing">
                             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center shadow-lg">

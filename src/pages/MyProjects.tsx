@@ -20,7 +20,7 @@ export default function MyProjects() {
                         <Briefcase className="w-7 h-7 text-indigo-400" />
                     </div>
                     <div>
-                        <h1 className="text-4xl font-display font-extrabold text-white">My Blueprints</h1>
+                        <h1 className="text-2xl md:text-4xl font-display font-extrabold text-white">My Blueprints</h1>
                         <p className="text-white/50 text-sm mt-1">Manage your active AI-orchestrated ventures.</p>
                     </div>
                 </div>

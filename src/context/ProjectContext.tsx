@@ -33,7 +33,7 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
 
         const loadProjects = async () => {
             try {
-                const data = await projectService.getProjects();
+                const data = await projectService.getProjects(user.uid);
                 if (data && data.length > 0) {
                     setProjects(data);
                 }

@@ -1,4 +1,4 @@
-import { collection, doc, setDoc, updateDoc, getDocs, getDoc, deleteDoc, query, orderBy } from 'firebase/firestore';
+import { collection, doc, setDoc, updateDoc, getDocs, getDoc, deleteDoc, query, orderBy, where } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { Project } from '../types';
 
@@ -39,15 +39,21 @@ export const projectService = {
         }
     },
 
-    async getProjects(): Promise<Project[]> {
+    async getProjects(userId: string): Promise<Project[]> {
         try {
-            const q = query(collection(db, COLLECTION_NAME), orderBy('createdAt', 'desc'));
+            const q = query(
+                collection(db, COLLECTION_NAME), 
+                where('userId', '==', userId)
+            );
             const querySnapshot = await getDocs(q);
             
             const projects: Project[] = [];
             querySnapshot.forEach((doc) => {
                 projects.push(doc.data() as Project);
             });
+            
+            // Sort in memory to avoid needing a composite index for where + orderBy
+            projects.sort((a, b) => b.createdAt - a.createdAt);
             
             return projects;
         } catch (error) {

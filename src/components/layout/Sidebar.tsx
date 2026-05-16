@@ -5,7 +5,11 @@ import { Plus, Briefcase, LayoutTemplate, Folders, Settings, Megaphone, Target, 
 import clsx from 'clsx';
 import { useState } from 'react';
 
-export default function Sidebar() {
+interface SidebarProps {
+    onCloseMobile?: () => void;
+}
+
+export default function Sidebar({ onCloseMobile }: SidebarProps) {
     const { projects, activeProject, setActiveProjectId, deleteProject, apiKey } = useProjects();
     const { user, signOut } = useAuth();
     const navigate = useNavigate();
@@ -14,6 +18,11 @@ export default function Sidebar() {
     const handleNewProject = () => {
         setActiveProjectId(null); // Deselect active so dashboard shows the new project form
         navigate('/dashboard');
+        if (onCloseMobile) onCloseMobile();
+    };
+
+    const handleNavClick = () => {
+        if (onCloseMobile) onCloseMobile();
     };
 
     const navItemClass = ({ isActive }: { isActive: boolean }) =>
@@ -25,8 +34,8 @@ export default function Sidebar() {
         );
 
     return (
-        <div className="w-64 h-full glass-panel flex flex-col pt-6 flex-shrink-0 z-20">
-            <div className="px-6 mb-8 flex items-center justify-between cursor-pointer group" onClick={() => navigate('/')}>
+        <div className="w-64 h-full glass-panel flex flex-col pt-6 flex-shrink-0 z-20 bg-aura-black md:bg-transparent">
+            <div className="px-6 mb-8 flex items-center justify-between cursor-pointer group" onClick={() => { navigate('/'); handleNavClick(); }}>
                 <div className="flex items-center gap-2.5">
                     <div className="w-8 h-8 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center shadow-lg backdrop-blur-md">
                         <Hexagon className="w-4 h-4 text-white" />
@@ -47,7 +56,7 @@ export default function Sidebar() {
             <div className="flex-1 overflow-y-auto px-4 pb-6 space-y-6">
 
                 <div className="space-y-1">
-                    <NavLink to="/dashboard/projects" className={navItemClass}>
+                    <NavLink to="/dashboard/projects" className={navItemClass} onClick={handleNavClick}>
                         <Folders className="w-4 h-4" /> My Projects
                     </NavLink>
                 </div>
@@ -57,22 +66,22 @@ export default function Sidebar() {
                     <div>
                         <h3 className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-3 px-3">Modules</h3>
                         <div className="space-y-1">
-                            <NavLink to="/dashboard" end className={navItemClass}>
+                            <NavLink to="/dashboard" end className={navItemClass} onClick={handleNavClick}>
                                 <Target className="w-4 h-4" /> Overview
                             </NavLink>
-                            <NavLink to="/dashboard/research" className={navItemClass}>
+                            <NavLink to="/dashboard/research" className={navItemClass} onClick={handleNavClick}>
                                 <Briefcase className="w-4 h-4" /> Market Research
                             </NavLink>
-                            <NavLink to="/dashboard/website" className={navItemClass}>
+                            <NavLink to="/dashboard/website" className={navItemClass} onClick={handleNavClick}>
                                 <LayoutTemplate className="w-4 h-4" /> Website
                             </NavLink>
-                            <NavLink to="/dashboard/marketing" className={navItemClass}>
+                            <NavLink to="/dashboard/marketing" className={navItemClass} onClick={handleNavClick}>
                                 <Megaphone className="w-4 h-4" /> Marketing
                             </NavLink>
-                            <NavLink to="/dashboard/funding" className={navItemClass}>
+                            <NavLink to="/dashboard/funding" className={navItemClass} onClick={handleNavClick}>
                                 <DollarSign className="w-4 h-4" /> Funding
                             </NavLink>
-                            <NavLink to="/dashboard/deployments" className={navItemClass}>
+                            <NavLink to="/dashboard/deployments" className={navItemClass} onClick={handleNavClick}>
                                 <Settings className="w-4 h-4" /> Deploy
                             </NavLink>
                         </div>
