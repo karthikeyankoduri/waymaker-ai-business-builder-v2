@@ -16,7 +16,7 @@ export default function MarketingKit() {
         status: 'idle' | 'loading' | 'success' | 'error';
     }>({ id: '', status: 'idle' });
 
-    const [webhookInput, setWebhookInput] = useState('');
+    const [webhookInput, setWebhookInput] = useState(import.meta.env.VITE_MARKETING_WEBHOOK || '');
     const [isSavingWebhook, setIsSavingWebhook] = useState(false);
     const [uploadedImage, setUploadedImage] = useState<string | null>(null);
     const [isAnalyzingCompetitors, setIsAnalyzingCompetitors] = useState(false);
@@ -26,7 +26,7 @@ export default function MarketingKit() {
     // Sync webhook input and existing analytics when project changes
     useEffect(() => {
         if (activeProject) {
-            setWebhookInput(activeProject.webhookUrl || '');
+            setWebhookInput(activeProject.webhookUrl || import.meta.env.VITE_MARKETING_WEBHOOK || '');
             if (activeProject.competitorAnalytics?.length) {
                 setCompetitorAnalytics(activeProject.competitorAnalytics);
                 hasFetchedRef.current = true;
@@ -101,7 +101,7 @@ export default function MarketingKit() {
 
     const handleSendToWebhook = async (postIndex?: number) => {
         if (!activeProject) return;
-        const urlToUse = webhookInput || activeProject.webhookUrl;
+        const urlToUse = webhookInput || activeProject.webhookUrl || import.meta.env.VITE_MARKETING_WEBHOOK;
         if (!urlToUse) {
             alert('Please configure a Webhook URL first.');
             return;

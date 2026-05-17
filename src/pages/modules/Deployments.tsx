@@ -21,8 +21,8 @@ export default function Deployments() {
     const [activeTab, setActiveTab] = useState<PlatformTab>('vercel');
     
     // Platform configs
-    const [vercelToken, setVercelToken] = useState('');
-    const [vercelTeamId, setVercelTeamId] = useState('');
+    const [vercelToken, setVercelToken] = useState(import.meta.env.VITE_VERCEL_API_TOKEN || '');
+    const [vercelTeamId, setVercelTeamId] = useState(import.meta.env.VITE_VERCEL_TEAM_ID || '');
     const [vercelProjectId, setVercelProjectId] = useState('');
     
     const [netlifyToken, setNetlifyToken] = useState('');
@@ -33,7 +33,7 @@ export default function Deployments() {
     const [githubBranch, setGithubBranch] = useState('gh-pages');
     
     // Legacy webhooks
-    const [webhookUrl, setWebhookUrl] = useState('');
+    const [webhookUrl, setWebhookUrl] = useState(import.meta.env.VITE_MARKETING_WEBHOOK || '');
     const [zapierWebhookUrl, setZapierWebhookUrl] = useState('');
     
     // UI states
@@ -52,8 +52,8 @@ export default function Deployments() {
         const config = activeProject.deploymentConfig;
         if (config) {
             // Vercel
-            setVercelToken(config.vercel?.apiToken || '');
-            setVercelTeamId(config.vercel?.teamId || '');
+            setVercelToken(config.vercel?.apiToken || import.meta.env.VITE_VERCEL_API_TOKEN || '');
+            setVercelTeamId(config.vercel?.teamId || import.meta.env.VITE_VERCEL_TEAM_ID || '');
             setVercelProjectId(config.vercel?.projectId || '');
             
             // Netlify
@@ -67,7 +67,7 @@ export default function Deployments() {
         }
 
         // Load legacy webhooks
-        setWebhookUrl(activeProject.webhookUrl || '');
+        setWebhookUrl(activeProject.webhookUrl || import.meta.env.VITE_MARKETING_WEBHOOK || '');
         setZapierWebhookUrl(activeProject.zapierWebhookUrl || '');
     }, [activeProject]);
 

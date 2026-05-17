@@ -120,9 +120,15 @@ class DeploymentService {
         }
     ): Promise<void> {
         const deployment = this.deployments.get(deploymentId);
-        if (!deployment || !params.config.vercel) return;
+        
+        const vercelConfig = params.config.vercel || {
+            apiToken: import.meta.env.VITE_VERCEL_API_TOKEN,
+            teamId: import.meta.env.VITE_VERCEL_TEAM_ID
+        };
 
-        const { apiToken, teamId, projectId } = params.config.vercel;
+        if (!deployment || !vercelConfig.apiToken) return;
+
+        const { apiToken, teamId, projectId } = vercelConfig;
 
         try {
             // Update status to building
@@ -482,7 +488,7 @@ class DeploymentService {
     validateConfig(platform: DeploymentPlatform, config: DeploymentConfig): boolean {
         switch (platform) {
             case 'vercel':
-                return !!config.vercel?.apiToken;
+                return !!(config.vercel?.apiToken || import.meta.env.VITE_VERCEL_API_TOKEN);
             case 'netlify':
                 return !!config.netlify?.apiToken;
             case 'github':
@@ -508,8 +514,14 @@ class DeploymentService {
         }
 
         // Test actual connection based on platform
-        if (platform === 'vercel' && config.vercel) {
-            return await this.testVercelConnection(config.vercel);
+        if (platform === 'vercel') {
+            const vercelConfig = config.vercel || {
+                apiToken: import.meta.env.VITE_VERCEL_API_TOKEN,
+                teamId: import.meta.env.VITE_VERCEL_TEAM_ID
+            };
+            if (vercelConfig.apiToken) {
+                return await this.testVercelConnection(vercelConfig);
+            }
         }
 
         // For other platforms, return success for now
