@@ -1,11 +1,13 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User } from 'firebase/auth';
-import { onAuthChange, signInWithGoogle as signInWithGoogleAuth, signOut as signOutAuth } from '../lib/auth';
+import { onAuthChange, signInWithGoogle as signInWithGoogleAuth, signOut as signOutAuth, signInWithEmail as signInWithEmailAuth, signUpWithEmail as signUpWithEmailAuth } from '../lib/auth';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   signInWithGoogle: () => Promise<void>;
+  signInWithEmail: (email: string, password: string) => Promise<void>;
+  signUpWithEmail: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -45,6 +47,24 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const signInWithEmail = async (email: string, password: string) => {
+    try {
+      await signInWithEmailAuth(email, password);
+    } catch (error) {
+      console.error('Sign in error:', error);
+      throw error;
+    }
+  };
+
+  const signUpWithEmail = async (email: string, password: string) => {
+    try {
+      await signUpWithEmailAuth(email, password);
+    } catch (error) {
+      console.error('Sign up error:', error);
+      throw error;
+    }
+  };
+
   const signOut = async () => {
     try {
       await signOutAuth();
@@ -58,6 +78,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     user,
     loading,
     signInWithGoogle,
+    signInWithEmail,
+    signUpWithEmail,
     signOut
   };
 

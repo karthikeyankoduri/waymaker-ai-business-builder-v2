@@ -6,10 +6,13 @@ import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import { motion } from 'framer-motion';
 
 export default function Login() {
-  const { user, signInWithGoogle, loading } = useAuth();
+  const { user, signInWithGoogle, signInWithEmail, signUpWithEmail, loading } = useAuth();
   const navigate = useNavigate();
   const [signingIn, setSigningIn] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     if (user && !loading) {
@@ -25,6 +28,27 @@ export default function Login() {
       // Navigation will happen automatically via useEffect
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to sign in');
+      setSigningIn(false);
+    }
+  };
+
+  const handleEmailAuth = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !password) {
+      setError('Please enter both email and password.');
+      return;
+    }
+    
+    try {
+      setSigningIn(true);
+      setError(null);
+      if (isSignUp) {
+        await signUpWithEmail(email, password);
+      } else {
+        await signInWithEmail(email, password);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : `Failed to ${isSignUp ? 'sign up' : 'sign in'}`);
       setSigningIn(false);
     }
   };
@@ -63,22 +87,22 @@ export default function Login() {
         </div>
 
         {/* Logo and Title */}
-        <div className="text-center mb-8 mt-24">
-          <h1 className="text-4xl font-display font-extrabold text-white mb-2 tracking-tight">
+        <div className="text-center mb-6 mt-16 sm:mt-24">
+          <h1 className="text-3xl sm:text-4xl font-display font-extrabold text-white mb-2 tracking-tight">
             Welcome Back.
           </h1>
-          <p className="text-white/50 text-lg font-light tracking-wide">
+          <p className="text-white/50 text-base sm:text-lg font-light tracking-wide">
             Your AI Co-Founder is waiting.
           </p>
         </div>
 
         {/* Login Card */}
-        <div className="glass-card p-8 rounded-[2rem] border-white/10 relative overflow-hidden group">
+        <div className="glass-card p-6 sm:p-8 rounded-[2rem] border-white/10 relative overflow-hidden group">
           <div className="absolute inset-0 bg-gradient-to-b from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-          <div className="relative z-10 space-y-6">
-            {/* Features List */}
-            <div className="space-y-4 mb-8 p-6 rounded-2xl bg-white/5 border border-white/5">
+          <div className="relative z-10 space-y-5 sm:space-y-6">
+            {/* Features List (Hidden on Mobile to save vertical space) */}
+            <div className="hidden sm:block space-y-4 mb-6 p-5 rounded-2xl bg-white/5 border border-white/5">
               <div className="flex items-start gap-3">
                 <Sparkles className="w-5 h-5 text-indigo-400 mt-0.5 flex-shrink-0" />
                 <div>
@@ -102,11 +126,51 @@ export default function Login() {
               </div>
             )}
 
+            {/* Email/Password Form */}
+            <form onSubmit={handleEmailAuth} className="space-y-4">
+              <div>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email address"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all"
+                  required
+                />
+              </div>
+              <div>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={signingIn}
+                className="w-full flex items-center justify-center gap-2 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-4 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-indigo-500/25"
+              >
+                {signingIn ? <LoadingSpinner size="sm" /> : (isSignUp ? 'Create Account' : 'Sign In with Email')}
+              </button>
+            </form>
+
+            <div className="relative py-2">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-white/10"></div>
+              </div>
+              <div className="relative flex justify-center text-xs">
+                <span className="bg-[#0f1115] px-2 text-white/40">Or continue with</span>
+              </div>
+            </div>
+
             {/* Google Sign In Button */}
             <button
               onClick={handleGoogleSignIn}
               disabled={signingIn}
-              className="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-black font-bold py-4 px-4 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              className="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-black font-bold py-3 px-4 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             >
               {signingIn ? (
                 <>
@@ -148,7 +212,13 @@ export default function Login() {
         {/* Footer */}
         <div className="text-center mt-8">
           <p className="text-white/30 text-sm font-light">
-            Need an account? <span className="text-white/60 font-medium">Just sign in to create one.</span>
+            {isSignUp ? "Already have an account?" : "Need an account?"}{' '}
+            <button 
+              onClick={() => setIsSignUp(!isSignUp)}
+              className="text-white/60 font-medium hover:text-white transition-colors underline"
+            >
+              {isSignUp ? "Sign in here." : "Create one now."}
+            </button>
           </p>
         </div>
       </motion.div>

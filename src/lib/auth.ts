@@ -4,6 +4,8 @@ import {
   signOut as firebaseSignOut,
   GoogleAuthProvider,
   onAuthStateChanged,
+  signInWithEmailAndPassword as firebaseSignInWithEmail,
+  createUserWithEmailAndPassword as firebaseCreateUserWithEmail,
   User
 } from 'firebase/auth';
 import { app } from './firebase';
@@ -18,6 +20,26 @@ export const signInWithGoogle = async (): Promise<User> => {
     return result.user;
   } catch (error) {
     throw new Error(`Failed to sign in: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
+};
+
+// Sign in with Email
+export const signInWithEmail = async (email: string, password: string): Promise<User> => {
+  try {
+    const result = await firebaseSignInWithEmail(auth, email, password);
+    return result.user;
+  } catch (error) {
+    throw new Error(`Failed to sign in: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
+};
+
+// Sign up with Email
+export const signUpWithEmail = async (email: string, password: string): Promise<User> => {
+  try {
+    const result = await firebaseCreateUserWithEmail(auth, email, password);
+    return result.user;
+  } catch (error) {
+    throw new Error(`Failed to sign up: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
 };
 
