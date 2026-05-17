@@ -57,11 +57,13 @@ Input your idea. The AI orchestrator takes over — scraping real-time market da
 | 🔍 **Live Market Research** | Real-time Google Search results (Serper API) injected into LLM prompts — grounded in facts, not hallucinations |
 | 🎯 **Competitor Analysis** | Automatic identification of direct/indirect competitors with strengths, weaknesses, and exploitable gaps |
 | 🌐 **Zero-Shot Website Builder** | Gemini generates a fully responsive, industry-tailored Tailwind CSS landing page from scratch |
-| 📣 **Marketing Kit** | Platform-specific posts (Instagram, LinkedIn, Twitter/X, Facebook) with hashtags and AI image prompts |
+| 📣 **Marketing Kit** | Cross-platform analytics + generated posts (Instagram, LinkedIn, Twitter/X, Facebook) with hashtags and AI image prompts |
 | 💰 **Funding Matcher** | Matches your business profile to VCs, grants, accelerators, and angel investors |
-| 🔗 **Webhook Integrations** | Push website code to Zapier and marketing posts to n8n for autonomous deployment |
+| 🔗 **Webhook Integrations** | Push website code to Zapier and marketing posts (with images) to n8n for autonomous deployment |
 | ☁️ **Persistent Projects** | All outputs saved to Firebase Firestore — switch between projects instantly, no re-generation |
 | 🤖 **Context-Aware Chatbot** | Floating AI assistant that knows your active project and can answer questions about its data |
+| 🎨 **AURA Design System** | Premium 'KINETIC' bento-grid aesthetic using dark-mode principles and Framer Motion |
+| 📱 **Mobile Responsive** | Fully fluid UI accommodating all devices, complete with responsive sidebars and data tables |
 
 ---
 
@@ -190,6 +192,11 @@ VITE_FIREBASE_PROJECT_ID=your-project-id
 VITE_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
 VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
 VITE_FIREBASE_APP_ID=your_app_id
+
+# Vercel & Webhooks — Global deployment credentials
+VITE_VERCEL_API_TOKEN=your_vercel_api_token
+VITE_VERCEL_TEAM_ID=your_vercel_team_id
+VITE_MARKETING_WEBHOOK=your_n8n_webhook_url
 ```
 
 > ⚠️ **Never commit `.env.local` to version control.** It is already listed in `.gitignore`.
@@ -258,15 +265,16 @@ Grid of competitor cards each showing strengths, weaknesses, and the specific ma
 - One-click "Send to Zapier" for auto-deployment
 
 ### 📣 Marketing Kit (`/dashboard/marketing`)
-- Competitor intelligence panel (Instagram analytics: followers, engagement rate, content strategy)
+- Competitor intelligence panel (analytics across Instagram, LinkedIn, and Twitter)
 - 4 social platform post cards (Instagram, LinkedIn, Twitter/X, Facebook)
+- Media attachment/image uploading for webhook payloads
 - Per-post and bulk webhook dispatch to n8n
 
 ### 💰 Funding Matcher (`/dashboard/funding`)
 Cards for matched funding opportunities: VCs, grants, accelerators, and angel investors — with match reasoning, eligibility, and amounts.
 
 ### 🔗 Deployments (`/dashboard/deployments`)
-Configuration hub for webhook integrations — n8n (marketing) and Zapier (website code) endpoints, saved per project.
+Configuration hub for CI/CD and webhook integrations — Vercel, Netlify, GitHub, n8n, and Zapier endpoints. Features fallback to global `.env` variables and UI-blurred input fields for security.
 
 ### 📁 My Projects (`/projects`)
 Project management hub. Lists all created projects with completion indicators, tags, and instant project switching.
@@ -311,7 +319,6 @@ Configure a Zapier webhook URL. Waymaker POSTs the generated HTML/CSS website co
 - [ ] 🚀 1-click GitHub + Netlify auto-deployment from Website Builder
 - [ ] 📊 Multi-query Serper research (competitor websites, investor databases, news)
 - [ ] 🏷️ Tiered plan limits and model-agnostic LLM switching (Claude, OpenAI)
-- [ ] 📱 Mobile-responsive layout improvements
 - [ ] 🔔 Real-time project collaboration (shared Firestore documents)
 
 ---
