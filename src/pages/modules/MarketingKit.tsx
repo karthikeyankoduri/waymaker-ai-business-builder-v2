@@ -187,7 +187,7 @@ export default function MarketingKit() {
                     placeholder="Enter your n8n or Make webhook URL..."
                     value={webhookInput}
                     onChange={(e) => setWebhookInput(e.target.value)}
-                    className="flex-1 bg-aura-dark/50 border border-white/10 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-emerald-500/50 transition-colors text-white"
+                    className="flex-1 bg-aura-dark/50 border border-white/10 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-emerald-500/50 transition-all text-white blur-sm hover:blur-none focus:blur-none"
                 />
                 <button
                     onClick={handleSaveWebhook}

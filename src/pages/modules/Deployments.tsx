@@ -162,7 +162,7 @@ export default function Deployments() {
                                 value={vercelToken}
                                 onChange={(e) => setVercelToken(e.target.value)}
                                 placeholder="vercel_••••••••••••••••"
-                                className="input-field w-full"
+                                className="input-field w-full blur-sm hover:blur-none focus:blur-none transition-all"
                             />
                         </div>
 
@@ -175,7 +175,7 @@ export default function Deployments() {
                                 value={vercelTeamId}
                                 onChange={(e) => setVercelTeamId(e.target.value)}
                                 placeholder="team_••••••••••••••••"
-                                className="input-field w-full"
+                                className="input-field w-full blur-sm hover:blur-none focus:blur-none transition-all"
                             />
                             <p className="text-xs text-white/40 mt-2">
                                 Required if deploying to a team account
@@ -191,7 +191,7 @@ export default function Deployments() {
                                 value={vercelProjectId}
                                 onChange={(e) => setVercelProjectId(e.target.value)}
                                 placeholder="prj_••••••••••••••••"
-                                className="input-field w-full"
+                                className="input-field w-full blur-sm hover:blur-none focus:blur-none transition-all"
                             />
                             <p className="text-xs text-white/40 mt-2">
                                 Link deployments to an existing Vercel project
@@ -224,7 +224,7 @@ export default function Deployments() {
                                 value={netlifyToken}
                                 onChange={(e) => setNetlifyToken(e.target.value)}
                                 placeholder="nfp_••••••••••••••••"
-                                className="input-field w-full"
+                                className="input-field w-full blur-sm hover:blur-none focus:blur-none transition-all"
                             />
                         </div>
 
@@ -237,7 +237,7 @@ export default function Deployments() {
                                 value={netlifySiteId}
                                 onChange={(e) => setNetlifySiteId(e.target.value)}
                                 placeholder="abc123-def456-ghi789"
-                                className="input-field w-full"
+                                className="input-field w-full blur-sm hover:blur-none focus:blur-none transition-all"
                             />
                             <p className="text-xs text-white/40 mt-2">
                                 Link deployments to an existing Netlify site
@@ -270,7 +270,7 @@ export default function Deployments() {
                                 value={githubToken}
                                 onChange={(e) => setGithubToken(e.target.value)}
                                 placeholder="ghp_••••••••••••••••"
-                                className="input-field w-full"
+                                className="input-field w-full blur-sm hover:blur-none focus:blur-none transition-all"
                             />
                         </div>
 
@@ -327,7 +327,7 @@ export default function Deployments() {
                                 value={webhookUrl}
                                 onChange={(e) => setWebhookUrl(e.target.value)}
                                 placeholder="https://your-n8n-instance.com/webhook-test/..."
-                                className="input-field w-full"
+                                className="input-field w-full blur-sm hover:blur-none focus:blur-none transition-all"
                             />
                         </div>
 
@@ -347,7 +347,7 @@ export default function Deployments() {
                                 value={zapierWebhookUrl}
                                 onChange={(e) => setZapierWebhookUrl(e.target.value)}
                                 placeholder="https://hooks.zapier.com/hooks/catch/..."
-                                className="input-field w-full"
+                                className="input-field w-full blur-sm hover:blur-none focus:blur-none transition-all"
                             />
                         </div>
                     </div>
