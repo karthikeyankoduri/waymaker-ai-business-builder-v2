@@ -9,7 +9,7 @@ import { fetchRealWorldContext } from './webSearchService';
 // Guard: llama-guard-3-8b       (content safety screening)
 // ─────────────────────────────────────────────────────────────────────────────
 
-const GENERATION_MODEL = 'llama-3.3-70b-versatile';
+const GENERATION_MODEL = 'openai/gpt-oss-20b';
 const GUARD_MODEL = 'llama-guard-3-8b';
 
 let groqClient: Groq | null = null;
